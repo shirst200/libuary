@@ -1,0 +1,43 @@
+using UnityEngine;
+using System.Collections;
+
+public class movement : MonoBehaviour {
+	
+	public float horizontalSpeed;
+	public float negHorizontalSpeed;
+	public int platformHeight;
+	public float frameSpeed;
+	public bool jump;
+	public float jumpHeight;
+	
+	// Use this for initialization
+	void Start () 
+	{
+	}
+	
+	
+	// Update is called once per frame
+	void Update () {
+		if (jump)
+		{
+			if (Input.GetButtonDown("Jump"))
+			{
+				rigidbody.velocity= new Vector3(rigidbody.velocity.x,jumpHeight,rigidbody.velocity.z);
+			}
+		}
+		transform.position=new Vector3(transform.position.x,1.5f,transform.position.z);
+		if (Input.GetAxis("Horizontal")>0)
+		{
+			rigidbody.velocity=rigidbody.velocity + new Vector3(-horizontalSpeed*Input.GetAxis("Horizontal"),0f,0f);
+			if (rigidbody.velocity.x<-horizontalSpeed*Input.GetAxis("Horizontal")){rigidbody.velocity = new Vector3(-horizontalSpeed*Input.GetAxis("Horizontal"),0f,rigidbody.velocity.z);}
+		}
+		else if (rigidbody.velocity.x<0){rigidbody.velocity=new Vector3(0f,0f,rigidbody.velocity.z);}
+
+		if (Input.GetAxis("Horizontal")<0)
+		{
+			rigidbody.velocity=rigidbody.velocity + new Vector3(-horizontalSpeed*Input.GetAxis("Horizontal"),0f,0f);
+			if (rigidbody.velocity.x>-horizontalSpeed*Input.GetAxis("Horizontal")){rigidbody.velocity = new Vector3(-horizontalSpeed*Input.GetAxis("Horizontal"),0f,rigidbody.velocity.z);}
+		}
+		else if (rigidbody.velocity.x>0){rigidbody.velocity=new Vector3(0f,0f,rigidbody.velocity.z);}
+	}
+}
