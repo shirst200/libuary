@@ -1,0 +1,35 @@
+using UnityEngine;
+using System.Collections;
+
+public class animation : MonoBehaviour {
+
+	public float frameSpeed = 0.025f;
+	public Material idle;
+	public Material walk;
+
+	// Use this for initialization
+	void Start () {
+		gameObject.renderer.material = idle;
+		StartCoroutine(animationPlay());
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	public void Walk()
+	{
+		gameObject.renderer.material = walk;
+	}
+	public void Idle()
+	{
+		gameObject.renderer.material = idle;
+	}
+	IEnumerator animationPlay()
+	{
+		yield return new WaitForSeconds(frameSpeed);
+		renderer.material.mainTextureOffset=new Vector2(renderer.material.mainTextureOffset.x+renderer.material.mainTextureScale.x,0f);
+		if (renderer.material.mainTextureOffset.x>1){renderer.material.mainTextureOffset=new Vector2(0f,0f);}
+		StartCoroutine(animationPlay());
+	}
+}
